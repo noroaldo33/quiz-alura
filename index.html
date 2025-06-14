@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Missão no Pântano</title>
+  <style>
+    :root {
+      --fundo: #13190d;
+      --principal: #51544e;
+      --secundaria: #a3d977;
+      --destaque: #04ff04;
+      --texto: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Trebuchet MS', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--principal);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--destaque);
+      margin-bottom: 20px;
+    }
+
+    .pergunta {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .alternativas {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      background-color: var(--secundaria);
+      color: var(--fundo);
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: var(--destaque);
+      color: var(--principal);
+    }
+
+    .resultado {
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Missão no Pântano</h1>
+    <div class="pergunta"></div>
+    <div class="alternativas"></div>
+    <div class="resultado"></div>
+  </div>
+
+  <script>
+    const perguntas = [
+      {
+        enunciado: "Você acorda no pântano e percebe que alguém invadiu seu lar. O que você faz?",
+        alternativas: [
+          { texto: "Grita com todo mundo e manda sair!", afirmacao: "Shrek mostrou que ninguém tira ele do sério no seu pântano!" },
+          { texto: "Tenta entender o que está acontecendo antes de agir.", afirmacao: "Shrek respirou fundo e foi conversar como um ogro civilizado." }
+        ]
+      },
+      {
+        enunciado: "Um burro falante começa a te seguir. Ele é barulhento, mas simpático. Qual sua reação?",
+        alternativas: [
+          { texto: "Ignora e segue seu caminho.", afirmacao: "Shrek tentou fugir, mas o Burro era insistente!" },
+          { texto: "Dá uma chance e escuta o que ele tem a dizer.", afirmacao: "Shrek fez uma amizade inesperada com o Burro!" }
+        ]
+      },
+      {
+        enunciado: "Lord Farquaad propõe um acordo: resgatar uma princesa em troca da paz no pântano. Qual sua escolha?",
+        alternativas: [
+          { texto: "Aceita, mas apenas para recuperar sua casa!", afirmacao: "Mesmo sem querer, Shrek topou a aventura." },
+          { texto: "Recusa, ninguém manda em você!", afirmacao: "Shrek preferiu resolver do seu jeito ogresco." }
+        ]
+      },
+      {
+        enunciado: "No castelo da princesa, há um dragão enorme. O que fazer?",
+        alternativas: [
+          { texto: "Tenta enganar o dragão e fugir com a princesa.", afirmacao: "Com esperteza e um pouco de sorte, Shrek escapou." },
+          { texto: "Luta com coragem!", afirmacao: "Shrek enfrentou o perigo como um verdadeiro herói ogro!" }
+        ]
+      },
+      {
+        enunciado: "De volta ao reino, você descobre que a princesa tem um segredo. Como reage?",
+        alternativas: [
+          { texto: "Aceita a verdade com o coração aberto.", afirmacao: "Shrek percebeu que beleza vem de dentro." },
+          { texto: "Fica confuso, mas tenta entender.", afirmacao: "Mesmo assustado, Shrek decidiu não fugir dessa vez." }
+        ]
+      },
+    ];
+
+    const perguntaEl = document.querySelector(".pergunta");
+    const alternativasEl = document.querySelector(".alternativas");
+    const resultadoEl = document.querySelector(".resultado");
+
+    let indice = 0;
+    let historia = "";
+
+    function mostrarPergunta() {
+      if (indice >= perguntas.length) {
+        mostrarResultado();
+        return;
+      }
+
+      const atual = perguntas[indice];
+      perguntaEl.textContent = atual.enunciado;
+      alternativasEl.innerHTML = "";
+
+      atual.alternativas.forEach((alt) => {
+        const btn = document.createElement("button");
+        btn.textContent = alt.texto;
+        btn.onclick = () => {
+          historia += alt.afirmacao + " ";
+          indice++;
+          mostrarPergunta();
+        };
+        alternativasEl.appendChild(btn);
+      });
+    }
+
+    function mostrarResultado() {
+      perguntaEl.textContent = "Final da Jornada!";
+      alternativasEl.innerHTML = "";
+      resultadoEl.textContent = historia;
+    }
+
+    mostrarPergunta();
+  </script>
+</body>
+</html>
